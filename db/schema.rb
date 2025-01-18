@@ -10,12 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_18_100926) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_18_121707) do
   create_table "tiny_urls", force: :cascade do |t|
     t.string "long_url"
     t.string "short_token"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "expiration_date"
     t.index ["short_token"], name: "index_tiny_urls_on_short_token", unique: true
   end
 end
