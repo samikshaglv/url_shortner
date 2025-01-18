@@ -25,7 +25,7 @@ gem "thruster", require: false
 # handling JWT tokens
 gem 'jwt' 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin Ajax possible
-# gem "rack-cors"
+gem "rack-cors"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -33,7 +33,9 @@ group :development, :test do
 
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
   gem "brakeman", require: false
-
+  gem 'rswag-api', '~> 2.8'
+  gem 'rswag-ui', '~> 2.8'
+  gem 'rswag-specs', '~> 2.8'
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
   gem 'rspec-rails', '~> 6.0.0'

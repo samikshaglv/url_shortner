@@ -13,9 +13,9 @@ class Api::TinyUrlsController < ApplicationController
     end
   end
 
-  # GET /:short_token
+  # GET /api/tiny_url/:short_token
   def show
-    tiny_url = TinyUrl.not_expired.find_by(short_token: params[:short_token])
+    tiny_url = TinyUrl.not_expired.find_by(short_token: params[:short_url])
 
     if tiny_url
       redirect_to tiny_url.long_url, allow_other_host: true

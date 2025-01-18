@@ -6,7 +6,6 @@ RSpec.describe "Api::TinyUrls", type: :request do
 
   describe "POST /api/tiny_urls" do
     it "creates a shortened URL with a valid token" do
-      debugger
       post "/api/tiny_urls", params: { tiny_url: { long_url: "https://example.com" } }.to_json, headers: headers
       expect(response).to have_http_status(:created)
       json = JSON.parse(response.body)

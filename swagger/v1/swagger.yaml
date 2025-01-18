@@ -1,0 +1,130 @@
+openapi: 3.0.1
+info:
+  title: TinyUrl API
+  description: API for URL shortening with AuthToken
+  version: v1
+servers:
+  - url: http://localhost:3000
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+security:
+  - BearerAuth: []
+paths:
+  /api/authenticate:
+    post:
+      summary: Generate an Auth Token
+      description: Authenticate the client and return a Bearer token.
+      operationId: authenticateClient
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client_id:
+                  type: string
+                  example: "external-client"
+                  description: The client identifier.
+                client_secret:
+                  type: string
+                  example: "secure-client-secret"
+                  description: The client secret for authentication.
+      responses:
+        '200':
+          description: Auth token generated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    example: "eyJhbGciOiJIUzI1NiJ9.eyJjbGllbnRfaWQiOiJleHRlcm5hbC1jbGllbnQiLCJleHAiOjE2ODAxOTIwMDB9.xJSkA7w5RhfddZKUoJhdeTp69TxF8DiSvMaUadU7ToA"
+        '401':
+          description: Unauthorized - Invalid credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Invalid credentials"
+  /api/tiny_urls:
+    post:
+      summary: Create a shortened URL
+      description: Generates a short URL for the given long URL.
+      operationId: createTinyUrl
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                tiny_url:
+                  type: object
+                  properties:
+                    long_url:
+                      type: string
+                      example: "https://example.com"
+                    expiration_date:
+                      type: string
+                      format: date-time
+                      example: "2025-01-31T23:59:59Z"
+      responses:
+        '201':
+          description: Shortened URL created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  short_url:
+                    type: string
+                    example: "http://localhost:3000/abc123"
+                  expiration_date:
+                    type: string
+                    format: date-time
+        '401':
+          description: Unauthorized - Missing or invalid token
+  /{token}:
+    get:
+      summary: Redirect to the original URL
+      description: Redirects the user to the original long URL based on the short token.
+      operationId: redirectToOriginalUrl
+      parameters:
+        - name: token
+          in: path
+          required: true
+          description: The short token representing the original URL.
+          schema:
+            type: string
+            example: "abc123"
+      responses:
+        '302':
+          description: Redirect to the original URL
+          headers:
+            Location:
+              schema:
+                type: string
+                example: "https://example.com" # Mocked example URL
+        '410':
+          description: The URL is expired or not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "URL not found or expired"

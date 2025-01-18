@@ -15,7 +15,15 @@ module UrlShortner
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
     # Common ones are `templates`, `generators`, or `middleware`, for example.
     config.autoload_lib(ignore: %w[assets tasks])
-
+    config.middleware.insert_before 0, Rack::Cors do
+      allow do
+        origins '*' # Allow all origins (or specify specific domains)
+        resource '*',
+                 headers: :any,
+                 methods: %i[get post put patch delete options head],
+                 expose: ['Location'] # Allow browsers to read the Location header
+      end
+    end
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files
