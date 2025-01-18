@@ -24,8 +24,6 @@ gem "kamal", require: false
 gem "thruster", require: false
 # handling JWT tokens
 gem 'jwt' 
-gem 'rspec-rails', '~> 6.0.0'
-
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin Ajax possible
 # gem "rack-cors"
 
@@ -38,6 +36,9 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+  gem 'rspec-rails', '~> 6.0.0'
+  gem 'factory_bot_rails', '~> 6.2' # For creating test data
+  gem 'faker', '~> 2.0' # For generating dummy data
 end
 
 
