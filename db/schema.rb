@@ -16,6 +16,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_18_100926) do
     t.string "short_token"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["short_token"], name: "index_tiny_urls_on_short_token"
+    t.index ["short_token"], name: "index_tiny_urls_on_short_token", unique: true
   end
 end

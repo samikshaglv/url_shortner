@@ -6,6 +6,6 @@ class CreateTinyUrls < ActiveRecord::Migration[8.0]
 
       t.timestamps
     end
-    add_index :tiny_urls, :short_token
+    add_index :tiny_urls, :short_token, unique: true
   end
 end
