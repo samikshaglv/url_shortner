@@ -40,7 +40,7 @@ group :development, :test do
   gem "rubocop-rails-omakase", require: false
   gem 'rspec-rails', '~> 6.0.0'
   gem 'factory_bot_rails', '~> 6.2' # For creating test data
-  gem 'faker', '~> 2.0' # For generating dummy data
+  gem 'faker', '~> 3.5' # For generating dummy data
 end
 
 
